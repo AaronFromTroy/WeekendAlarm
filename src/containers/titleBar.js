@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {addAlarm} from '../actions/alarmActions';
+import {changePage} from '../actions/navigationActions';
+import * as constants from '../constants/constants';
 import {connect} from 'react-redux';
 import store from '../store';
 import {
@@ -10,22 +12,42 @@ import {
 } from 'react-native';
 
 class TitleBar extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+        console.log(this.props);
         return (
             <View style={styles.toolbar}>
-                <Text style={styles.button}></Text>
+                {this.props.page === constants.PAGE_ADD_ALARM ?
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={this.alarmList}>
+                        <Text style={styles.text}>{'< Back'}</Text>
+                    </TouchableOpacity>
+                    : <Text style={styles.button}></Text>
+                }
                 <Text style={styles.title}>WeekendAlarm</Text>
-                <TouchableOpacity 
-                    style={styles.button} 
-                    onPress={this.addAlarm}>
-                    <Text style={styles.text}>Add Alarm</Text>
-                </TouchableOpacity>
+                {this.props.page === constants.PAGE_ALARM_LIST ?
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={this.addAlarm}>
+                        <Text style={styles.text}>Add</Text>
+                    </TouchableOpacity>
+                    : <Text style={styles.button}></Text>
+                }
             </View>
         );
     }
 
     addAlarm() {
-        store.dispatch(addAlarm({time: '1pm', days: 'MWF'}));
+        //store.dispatch(addAlarm({time: '1pm', days: 'MWF'}));
+        store.dispatch(changePage(constants.PAGE_ADD_ALARM));
+    }
+
+    alarmList() {
+        store.dispatch(changePage(constants.PAGE_ALARM_LIST));
     }
 }
 
@@ -44,7 +66,10 @@ const styles = StyleSheet.create({
         fontSize: 30
     },
     text: {
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingTop: 10,
+        color: '#FFFFFF',
+        fontWeight: 'bold'
     },
     button: {
         width: 50

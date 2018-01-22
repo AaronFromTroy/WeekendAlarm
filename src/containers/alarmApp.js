@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import store from '../store';
 import TitleBar from './titleBar';
-import SnoozedAlarmList from './snoozedAlarmList';
-//import AlarmList from '../components/alarmList';
+import FullAlarmList from './fullAlarmList';
+import AddAlarm from './addAlarm';
+
+import * as constants from '../constants/constants';
 
 class AlarmApp extends Component {
     constructor(props) {
@@ -10,10 +14,20 @@ class AlarmApp extends Component {
     }
 
     render() {
+        console.log(store.getState());
+        var focusedView = null;
+        if (store.getState().page === constants.PAGE_ALARM_LIST) {
+            focusedView = <FullAlarmList/>
+        } else if (store.getState().page === constants.PAGE_ADD_ALARM) {
+            focusedView = <AddAlarm/>;
+        } else {
+            focusedView = <FullAlarmList/>;
+        }
+
         return (
             <View>
-                <TitleBar/>
-                <SnoozedAlarmList />
+                <TitleBar page={store.getState().page}/>
+                {focusedView}
             </View>
         );
     }
@@ -21,10 +35,16 @@ class AlarmApp extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center'
     }
 });
 
-export default AlarmApp;
+function mapStateToProps(state) {
+    return {
+        alarms: state.alarms,
+        page: state.page
+    }
+}
+
+export default connect(mapStateToProps)(AlarmApp);

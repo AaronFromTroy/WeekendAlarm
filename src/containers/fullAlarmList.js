@@ -3,16 +3,11 @@ import {deleteAlarm} from '../actions/alarmActions';
 import AlarmList from '../components/alarmList';
 
 const mapStateToProps = (state) => ({
-    alarms: state
+    alarms: state.alarms
 });
 
-const mapDispatchToProps = {
-    onAlarmClick: deleteAlarm
-}
-
-const SnoozedAlarmList = connect(
-    mapStateToProps,
-    mapDispatchToProps
+const FullAlarmList = connect(
+    mapStateToProps
 )(AlarmList);
 
-export default SnoozedAlarmList;
+export default FullAlarmList;

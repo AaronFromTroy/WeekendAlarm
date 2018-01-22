@@ -19,8 +19,8 @@ const style = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingTop: 10,
-        paddingBottom: 10
+        padding: 10
+
     },
     time: {
         fontSize: 20,
