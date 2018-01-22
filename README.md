@@ -10,3 +10,7 @@ The idea is to allow the user to "Snooze" the alarm for the next day in advance.
 Weekend alarm is currently not in a working state.<br/>
 1. Currently Add Alarm just creates a view with a static time and day range.
 2. Android seems to not agree with react natives view borders. This will cause inconsistencies in the alarm list layout.
+3. Alarms can be added without a schedule. A default will be added, although this doesn't matter since alarms aren't wired up yet.
+4. All testing has been done on android emulators.
+5. Need to merge styles into a shared styles object.
+6. DatePicker needs to be reworked in AddAlarm component.
