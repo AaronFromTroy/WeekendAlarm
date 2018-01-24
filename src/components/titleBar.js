@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {addAlarm} from '../actions/alarmActions';
-import {changePage} from '../actions/navigationActions';
 import * as constants from '../constants/constants';
-import {connect} from 'react-redux';
-import store from '../store';
 import {
     StyleSheet,
     TouchableOpacity,
@@ -17,13 +13,12 @@ class TitleBar extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <View style={styles.toolbar}>
                 {this.props.page === constants.PAGE_ADD_ALARM ?
                     <TouchableOpacity 
                         style={styles.button} 
-                        onPress={this.alarmList}>
+                        onPress={() => this.handleChangePage(constants.PAGE_ALARM_LIST)}>
                         <Text style={styles.text}>{'< Back'}</Text>
                     </TouchableOpacity>
                     : <Text style={styles.button}></Text>
@@ -32,7 +27,7 @@ class TitleBar extends Component {
                 {this.props.page === constants.PAGE_ALARM_LIST ?
                     <TouchableOpacity 
                         style={styles.button} 
-                        onPress={this.addAlarm}>
+                        onPress={() => this.handleChangePage(constants.PAGE_ADD_ALARM)}>
                         <Text style={styles.text}>Add</Text>
                     </TouchableOpacity>
                     : <Text style={styles.button}></Text>
@@ -41,13 +36,8 @@ class TitleBar extends Component {
         );
     }
 
-    addAlarm() {
-        //store.dispatch(addAlarm({time: '1pm', days: 'MWF'}));
-        store.dispatch(changePage(constants.PAGE_ADD_ALARM));
-    }
-
-    alarmList() {
-        store.dispatch(changePage(constants.PAGE_ALARM_LIST));
+    handleChangePage = (page) => {
+        this.props.changePage(page);
     }
 }
 
